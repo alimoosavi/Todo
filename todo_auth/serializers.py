@@ -5,16 +5,10 @@ from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 
-from todo_auth.models import UserProfile
+from project_management.models import Developer, ProjectManager
 
 
-class DeveloperSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('username',
-                  'email',
-                  'first_name',
-                  'last_name')
+
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -25,8 +19,10 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         return token
 
 
-VALID_ROLES = [UserProfile.DEVELOPER,
-               UserProfile.PROJECT_MANAGER]
+DEVELOPER = 'Developer'
+PROJECT_MANAGER = 'Project Manager'
+
+VALID_ROLES = [DEVELOPER, PROJECT_MANAGER]
 
 
 def validate_user_role(role: str):
@@ -74,6 +70,10 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
 
-        UserProfile.objects.create(role=validated_data['role'], user=user)
+        role = validated_data.get('role')
+        if role == DEVELOPER:
+            Developer.objects.create(user=user)
+        elif role == PROJECT_MANAGER:
+            ProjectManager.objects.create(user=user)
 
         return user

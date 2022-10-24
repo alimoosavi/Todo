@@ -1,12 +1,16 @@
 from rest_framework import generics
-from project_management.models import Project
-from todo_auth.permissions import IsProjectManager
+from project_management.models import Project, Developer
+from project_management.permissions import IsProjectManager
 from rest_framework.permissions import IsAuthenticated
-from project_management.serializers import ProjectSerializer
+from project_management.serializers import ProjectSerializer, DeveloperSerializer
 from rest_framework import status
 from rest_framework.response import Response
 
 
+class DeveloperListViewSet(generics.ListAPIView):
+    permission_classes = (IsAuthenticated, IsProjectManager,)
+    queryset = Developer.objects.all()
+    serializer_class = DeveloperSerializer
 
 
 class ProjectCreateAndListViewSet(generics.ListCreateAPIView):
@@ -21,6 +25,3 @@ class ProjectCreateAndListViewSet(generics.ListCreateAPIView):
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
-
-
