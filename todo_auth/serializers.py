@@ -16,8 +16,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         return token
 
 
-VALID_ROLES = ['Developer',
-               'Project Manager']
+VALID_ROLES = [UserProfile.DEVELOPER,
+               UserProfile.PROJECT_MANAGER]
 
 
 def validate_user_role(role: str):
