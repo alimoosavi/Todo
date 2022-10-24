@@ -8,6 +8,15 @@ from django.core.exceptions import ValidationError
 from todo_auth.models import UserProfile
 
 
+class DeveloperSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username',
+                  'email',
+                  'first_name',
+                  'last_name')
+
+
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
