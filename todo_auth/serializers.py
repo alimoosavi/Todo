@@ -5,7 +5,6 @@ from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 
-# from project_management.models import Developer, ProjectManager
 from todo_auth.models import UserProfile
 
 
@@ -16,9 +15,6 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['username'] = user.username
         return token
 
-
-# DEVELOPER = 'Developer'
-# PROJECT_MANAGER = 'Project Manager'
 
 VALID_ROLES = [UserProfile.DEVELOPER, UserProfile.PROJECT_MANAGER]
 
