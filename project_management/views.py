@@ -1,15 +1,17 @@
 from rest_framework import generics
-from project_management.models import Project, Developer
+from todo_auth.models import UserProfile
+from project_management.models import Project
 from project_management.permissions import IsProjectManager
 from rest_framework.permissions import IsAuthenticated
-from project_management.serializers import ProjectSerializer, DeveloperSerializer
+from project_management.serializers import ProjectSerializer
+from todo_auth.serializers import DeveloperSerializer
 from rest_framework import status
 from rest_framework.response import Response
 
 
 class DeveloperListViewSet(generics.ListAPIView):
     permission_classes = (IsAuthenticated, IsProjectManager,)
-    queryset = Developer.objects.all()
+    queryset = UserProfile.objects.filter(role=UserProfile.DEVELOPER)
     serializer_class = DeveloperSerializer
 
 

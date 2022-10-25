@@ -1,7 +1,8 @@
 from rest_framework.permissions import BasePermission
-from project_management.models import ProjectManager
+from todo_auth.models import UserProfile
 
 
 class IsProjectManager(BasePermission):
     def has_permission(self, request, view):
-        return ProjectManager.objects.filter(user=request.user).exists()
+        return UserProfile.objects.filter(user=request.user,
+                                          role=UserProfile.PROJECT_MANAGER).exists()

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from project_management.models import Project, Developer
+from project_management.models import Project
 
 
 class ProjectSerializer(serializers.ModelSerializer):
@@ -12,11 +12,3 @@ class ProjectSerializer(serializers.ModelSerializer):
         }
 
 
-class DeveloperSerializer(serializers.ModelSerializer):
-    user = serializers.SlugRelatedField(many=False,
-                                        read_only=True,
-                                        slug_field='username')
-
-    class Meta:
-        model = Developer
-        fields = ('user',)
