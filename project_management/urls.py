@@ -17,5 +17,5 @@ urlpatterns = [
     path('task/', TaskCreateViewSet.as_view(), name='create_task'),
     path('task/<int:project_pk>/', TaskListViewSet.as_view(), name='list_tasks'),
     path('my-tasks/<int:project_pk>/', MyTaskListViewSet.as_view(), name='my_tasks'),
-    path('assign/', AssignTaskCreateViewSet.as_view(), name='assign_task'),
+    path('assign-task/', AssignTaskCreateViewSet.as_view(), name='assign_task'),
 ]
