@@ -50,6 +50,15 @@ class TaskCreateViewSet(generics.CreateAPIView):
     serializer_class = TaskSerializer
 
 
+class MyTaskListViewSet(generics.ListAPIView):
+    permission_classes = (IsAuthenticated, IsDeveloper, HasAccessToProject)
+    serializer_class = TaskSerializer
+
+    def get_queryset(self):
+        return Task.objects.filter(project_id=self.kwargs['project_pk'],
+                                   assignees__in=self.request.user)
+
+
 class AssignTaskCreateViewSet(generics.CreateAPIView):
     permission_classes = (IsAuthenticated, IsDeveloper, HasAccessToProject,)
     serializer_class = AssignSerializer
