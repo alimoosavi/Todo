@@ -81,3 +81,13 @@ class AssignSerializer(serializers.Serializer):
 
     class Meta:
         fields = ('project', 'task',)
+
+
+class DeveloperSerializer(serializers.ModelSerializer):
+    user = serializers.SlugRelatedField(many=False,
+                                        read_only=True,
+                                        slug_field='username')
+
+    class Meta:
+        model = UserProfile
+        fields = ('user',)

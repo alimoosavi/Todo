@@ -9,9 +9,9 @@ from project_management.serializers import (ProjectSerializer,
                                             AssignProjectToPMSerializer,
                                             AssignProjectToDeveloperSerializer,
                                             TaskSerializer,
-                                            AssignSerializer)
+                                            AssignSerializer,
+                                            DeveloperSerializer)
 from todo_auth.models import UserProfile
-from todo_auth.serializers import DeveloperSerializer
 
 
 class DeveloperListViewSet(generics.ListAPIView):

@@ -65,13 +65,3 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.save()
         UserProfile.objects.create(user=user, role=validated_data.get('role'))
         return user
-
-
-class DeveloperSerializer(serializers.ModelSerializer):
-    user = serializers.SlugRelatedField(many=False,
-                                        read_only=True,
-                                        slug_field='username')
-
-    class Meta:
-        model = UserProfile
-        fields = ('user',)
