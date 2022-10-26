@@ -76,7 +76,7 @@ class AssignSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         task = Task.objects.get(id=validated_data['task'])
-        task.assignees.add(self.context.user)
+        task.assignees.add(self.context['request'].user)
         return task
 
     class Meta:
