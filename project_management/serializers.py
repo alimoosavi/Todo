@@ -1,12 +1,12 @@
 from rest_framework import serializers
-from project_management.models import Project
+from project_management.models import Project, Task
 from todo_auth.models import UserProfile
 
 
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ('id', 'title', 'description', 'creator')
+        fields = ('id', 'title', 'description',)
         extra_kwargs = {
             'id': {'read_only': True},
             'creator': {'write_only': True}
@@ -57,3 +57,9 @@ class AssignProjectToDeveloperSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
         fields = ('project', 'username',)
+
+
+class TaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = ('title', 'description', 'project',)
