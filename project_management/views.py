@@ -56,7 +56,7 @@ class MyTaskListViewSet(generics.ListAPIView):
 
     def get_queryset(self):
         return Task.objects.filter(project_id=self.kwargs['project_pk'],
-                                   assignees__in=self.request.user)
+                                   assignees__in=[self.request.user])
 
 
 class AssignTaskCreateViewSet(generics.CreateAPIView):
