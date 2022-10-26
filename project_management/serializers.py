@@ -63,3 +63,21 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = ('title', 'description', 'project',)
+
+
+class AssignSerializer(serializers.Serializer):
+    project = serializers.IntegerField(write_only=True, required=True)
+    task = serializers.IntegerField(write_only=True, required=True)
+
+    def validate(self, attrs):
+        if not Task.objects.filter(id=attrs['task'], project_id=attrs['project']).exists():
+            raise serializers.ValidationError({"task": "Task Id doesn't exist in project"})
+        return attrs
+
+    def create(self, validated_data):
+        task = Task.objects.get(id=validated_data['task'])
+        task.assignees.add(self.context.user)
+        return task
+
+    class Meta:
+        fields = ('project', 'task',)

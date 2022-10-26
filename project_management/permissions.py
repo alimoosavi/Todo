@@ -9,6 +9,12 @@ class IsProjectManager(BasePermission):
                                           role=UserProfile.PROJECT_MANAGER).exists()
 
 
+class IsDeveloper(BasePermission):
+    def has_permission(self, request, view):
+        return UserProfile.objects.filter(user=request.user,
+                                          role=UserProfile.DEVELOPER).exists()
+
+
 class HasAccessToProject(BasePermission):
     def has_permission(self, request, view):
         project_pk = view.kwargs['project_pk'] \

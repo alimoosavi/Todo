@@ -2,9 +2,14 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 
 from project_management.models import Project, Task
-from project_management.permissions import IsProjectManager, HasAccessToProject
-from project_management.serializers import ProjectSerializer, AssignProjectToPMSerializer, \
-    AssignProjectToDeveloperSerializer, TaskSerializer
+from project_management.permissions import (IsProjectManager,
+                                            HasAccessToProject,
+                                            IsDeveloper)
+from project_management.serializers import (ProjectSerializer,
+                                            AssignProjectToPMSerializer,
+                                            AssignProjectToDeveloperSerializer,
+                                            TaskSerializer,
+                                            AssignSerializer)
 from todo_auth.models import UserProfile
 from todo_auth.serializers import DeveloperSerializer
 
@@ -43,3 +48,8 @@ class TaskListViewSet(generics.ListAPIView):
 class TaskCreateViewSet(generics.CreateAPIView):
     permission_classes = (IsAuthenticated, HasAccessToProject,)
     serializer_class = TaskSerializer
+
+
+class AssignTaskCreateViewSet(generics.CreateAPIView):
+    permission_classes = (IsAuthenticated, IsDeveloper, HasAccessToProject,)
+    serializer_class = AssignSerializer
